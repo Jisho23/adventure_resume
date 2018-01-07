@@ -84,7 +84,7 @@ function listCartridges() {
     return "No game cartridges found.";
   }
   var cartridgesFormated =
-    "Welcome to Joshua Denenberg's interactive Adventure-sume! Type 'load resume' to begin! \n";
+    "Welcome to Joshua Denenberg's interactive Adventu-resume! Type 'load resume' to begin! \n";
   return cartridgesFormated;
 }
 
