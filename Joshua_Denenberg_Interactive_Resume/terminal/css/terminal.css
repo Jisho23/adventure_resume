@@ -3,6 +3,7 @@
   color: white;
   margin: 0;
   border: none;
+  font-size: 100%;
 }
 *:focus {
   outline: none;
@@ -11,11 +12,11 @@ html,
 body,
 #input,
 #display {
-  width: 100%;
-  height: 100%;
+  width: 99%;
+  height: 99%;
 }
 #input {
-  height: 30px;
+  height: 100px;
   position: absolute;
   bottom: 0;
   border-top: 1px solid #00d100;
@@ -23,7 +24,7 @@ body,
 }
 #display {
   line-height: 1.5em;
-  padding: 10px;
+  padding: 100px;
   overflow-y: scroll;
   overflow-x: hidden;
   resize: none;

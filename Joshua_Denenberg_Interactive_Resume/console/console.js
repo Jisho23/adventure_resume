@@ -84,21 +84,13 @@ function listCartridges() {
     return "No game cartridges found.";
   }
   var cartridgesFormated =
-    "Welcome to Joshua Denenberg's interactive adventuresume! Type 'load adventuresume' to begin! \n";
-  // for (var i = 0; i < cartridges.length; i++) {
-  //   cartridgesFormated = cartridgesFormated.concat(
-  //     cartridges[i].substr(0, cartridges[i].lastIndexOf("."))
-  //   );
-  //   if (i < cartridges.length - 1) {
-  //     cartridgesFormated = cartridgesFormated.concat("\n");
-  //   }
-  // }
+    "Welcome to Joshua Denenberg's interactive Adventure-sume! Type 'load resume' to begin! \n";
   return cartridgesFormated;
 }
 
 function loadCartridge(gameID, gameName) {
   if (!gameName) {
-    return "Try again...";
+    return "Try again... type 'load resume'";
   }
   try {
     delete require.cache[require.resolve("../cartridges/" + gameName + ".js")];
@@ -123,7 +115,35 @@ var actions = {
     delete games[game.gameID];
     return {
       message:
-        "Somehow you have died. It's unfortunate your quest has come to an end here...",
+        "Somehow you have died. \n It's unfortunate your quest has come to an end here... load the game back up to try again.",
+      success: true
+    };
+  },
+
+  easteregg: function(game, command) {
+    return {
+      message: "Oh, were you expecting something interesting? Sorry...",
+      success: true
+    };
+  },
+
+  help: function(game, command) {
+    return {
+      message:
+        "\n  To interact with something, type 'look' followed by a noun." +
+        "\n  To pick something up, type 'take' followed by the item and type 'use' followed by the name of the item to use it!" +
+        "\n  To move between areas, simply type 'go' followed by one of the options (either desk, bookshelf, exit, or closet)." +
+        "\n  The game will only end after you have found all three main items and use them!" +
+        "\n  Keywords are in quotes." +
+        "\n  At any time, you can type leave to leave the game, but please give it your best shot! I worked really hard on this."
+    };
+  },
+
+  leave: function(game, command) {
+    delete games[game.gameID];
+    return {
+      message:
+        "I appreciate you taking the time to look at my resume and play this game! Feel free to try again, just type 'load resume'",
       success: true
     };
   },
@@ -327,7 +347,7 @@ function exitsToString(exitsObject) {
       var returnString = " Exit is ";
       break;
     default:
-      var returnString = " You can move to the ";
+      var returnString = " You can go to the ";
   }
   for (i = 0; i < visibleExits.length; ++i) {
     returnString = returnString.concat(visibleExits[i]);
