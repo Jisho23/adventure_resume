@@ -1,3 +1,6 @@
+// ===== Global Terminal Variables ===========================================================
+var toggleInput = true;
+
 $(function() {
   // ===== Onload Functions ===========================================================
   displayResize();
@@ -5,16 +8,19 @@ $(function() {
 
   // ===== Event Handlers =============================================================
   // ----- Input Submit ---------------------------------------------------------------
+
   $("#console").submit(function(event) {
     event.preventDefault();
-    var inputString = $("#input").val();
-    inputString = inputString.trim();
-    $("#input").val("");
-    toScreen(inputString, "user");
-    if (inputString !== "") {
-      messageServer(inputString);
-      if (inputString !== inputBuffer[inputBuffer.length - 1]) {
-        inputBuffer.push(inputString);
+    if (toggleInput) {
+      var inputString = $("#input").val();
+      inputString = inputString.trim();
+      $("#input").val("");
+      toScreen(inputString, "user");
+      if (inputString !== "") {
+        messageServer(inputString);
+        if (inputString !== inputBuffer[inputBuffer.length - 1]) {
+          inputBuffer.push(inputString);
+        }
       }
     }
     inputBufferIndex = inputBuffer.length;
@@ -64,11 +70,11 @@ function displayResize() {
 // ----- Write to Screen ----------------------------------------------------------------
 var userAction = "";
 function toScreen(message, actor) {
-  debugger;
   if (actor === "console") {
     battleTextScroll(userAction, message, 0);
     $("#display").scrollTop($("#display")[0].scrollHeight);
   } else {
+    toggleInput = !toggleInput;
     userAction = "> " + message + "\n \n";
   }
 }
@@ -81,5 +87,9 @@ function battleTextScroll(fullText, message, index) {
     setTimeout(function() {
       battleTextScroll(fullText, message, index);
     }, 25);
+  } else {
+    if (!toggleInput) {
+      toggleInput = true;
+    }
   }
 }
